@@ -1,0 +1,12 @@
+{
+  "Name":"SqueezeNet",
+  "InputLayer":"data",
+  "OutputLayer":"softmax",
+  "InputSize":227,
+  "InputDim":3,
+  "Mean":[123.0, 117.0, 104.0],
+  "NetworkPath":"tensorflow_squeezenet.pb",
+  "LabelsPath":"labels.txt",
+  "Threshold":"0.85"
+
+}

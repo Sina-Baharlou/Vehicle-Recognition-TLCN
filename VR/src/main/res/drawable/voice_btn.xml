@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true" android:state_pressed="false">
+        <layer-list>
+            <item android:drawable="@drawable/left_rnd_btn" />
+            <item android:drawable="@drawable/speaker" />
+        </layer-list>
+    </item>
+
+    <item android:state_checked="false" android:state_pressed="false">
+        <layer-list>
+            <item android:drawable="@drawable/left_rnd_btn" />
+            <item android:drawable="@drawable/speaker_disabled" />
+        </layer-list>
+    </item>
+
+    <item android:state_checked="true" android:state_pressed="true">
+        <layer-list>
+            <item android:drawable="@drawable/left_rnd_btn_pressed" />
+            <item android:drawable="@drawable/speaker" />
+        </layer-list>
+    </item>
+
+    <item android:state_checked="false" android:state_pressed="true">
+        <layer-list>
+            <item android:drawable="@drawable/left_rnd_btn_pressed" />
+            <item android:drawable="@drawable/speaker_disabled" />
+        </layer-list>
+    </item>
+
+</selector>

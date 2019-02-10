@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rel_padding">5dp</dimen>
+<dimen name="detect_bar_margin_top">30dp</dimen>
+    <dimen name="right_bar_margin_end_right">-10dp</dimen>
+    <dimen name="right_btn_size">50dp</dimen>
+    <dimen name="right_btn_margin_end_right">15dp</dimen>
+    <dimen name="left_bar_margin_start_left">-15dp</dimen>
+    <dimen name="left_btn_size">40dp</dimen>
+    <dimen name="left_btn_margin_start_left">15dp</dimen>
+    <dimen name="left_btn_margin_bottom">10dp</dimen>
+    <dimen name="bar_round_factor">10dp</dimen>
+    <integer name="btn_gradient_angle">45</integer>
+</resources>

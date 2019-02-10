@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorIconBar">#55000000</color>
+    <color name="colorRightBtn">#0e9809</color>
+    <color name="colorRightBtnPressed">#0c7908</color>
+    <color name="colorRightBtnDisabled">#ed2f2f</color>
+    <color name="colorLeftBtnSolid">#d5d8da</color>
+    <color name="colorLeftBtnGradientStart">#ffffff</color>
+    <color name="colorLeftBtnGradientEnd">#d5d8da</color>
+    <color name="colorLeftBtnPressedSolid">#959698</color>
+    <color name="colorLeftBtnPressedGradientStart">#adb0b2</color>
+    <color name="colorLeftBtnPressedGradientEnd">#a8a3a3</color>
+
+
+
+
+
+</resources>

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Vehicle Recognition</string>
+    <string name="nothing_found">Nothing has been detected</string>
+    <string name="save_format" formatted="false">%s/%s(%s-%.3f).jpg</string>
+    <string name="output_format" formatted="false">Prediction: %s \nAccuracy: %.1f%% \nElapsed time: %.3f seconds</string>
+    <string name="output_format_svm_h" formatted="false">Prediction: %s \nAccuracy: High \nElapsed time: %.3f seconds</string>
+    <string name="output_format_svm_l" formatted="false">Prediction: %s \nAccuracy: Low \nElapsed time: %.3f seconds</string>
+
+
+    <string name="date_format">dd-MM-yyyy-HH-mm-ss</string>
+    <string name="json_error">Unable to parse the json file.</string>
+    <string name="file_missing">Some configuration files are missing.</string>
+    <string name="opencv_failed">Unable to initialize OpenCV.</string>
+    <string name="voice_on">Text to speech is enabled.</string>
+    <string name="storage_on" formatted="false">Detected images will be stored at %s</string>
+    <string name="select_network">Select network:</string>
+    <string name="information_title">Information</string>
+    <string name="information" >VR is a demonstration program for the project called
+        <i>\"Transfer Learning Approach for Classification and Noise Reduction on Noisy Web Data\"</i>
+        \n\nAuthors:\nSina Moayed Baharlou <a href="mailto:Sina.baharlou@gmail.com">(Email)</a>
+        \nSupervisor:
+        Prof. Javad Abbasi Aghamaleki <a href="mailto:j.a.aghamaleki@du.ac.ir">(Email)</a>
+
+        \nProject page : <a href="https://sites.google.com/view/vehicle-recognition/">Link 1</a> <a href="https://sina-baharlou.github.io/VehicleRecognition/">Link 2</a>
+
+    </string>
+    <string name="tensor_error">Failed to initialize TensforFlow native library.</string>
+    <string name="speech_failed">Unable to initialize Text2Speech module.</string>
+    <string name="frame_error">Error occurred while processing the camera frame.</string>
+    <string name="network_error">Error occurred while feeding forward the network.</string>
+    <string name="app_folder">/VehicleRecognition</string>
+</resources>

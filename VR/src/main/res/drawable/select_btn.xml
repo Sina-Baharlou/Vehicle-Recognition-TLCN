@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false">
+        <layer-list>
+            <item android:drawable="@drawable/left_rnd_btn" />
+            <item android:drawable="@drawable/select" />
+        </layer-list>
+    </item>
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:drawable="@drawable/left_rnd_btn_pressed" />
+            <item android:drawable="@drawable/select" />
+        </layer-list>
+    </item>
+
+</selector>

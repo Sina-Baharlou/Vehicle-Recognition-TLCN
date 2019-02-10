@@ -1,0 +1,12 @@
+{
+  "Name":"CarNetSVM",
+  "InputLayer":"input",
+  "OutputLayer":"SVM_W/SVM_W",
+  "InputSize":224,
+  "InputDim":3,
+  "Mean":[123.0, 117.0, 104.0],
+  "NetworkPath":"tensorflow_carnet_svm.pb",
+  "LabelsPath":"labels.txt",
+  "Threshold":"-0.2"
+
+}
