@@ -13,6 +13,6 @@ For more information please visit the following website: https://www.sinabaharlo
 
 ### How to Run 
 
-Import the project in Android Studio (Or any other android compiler), install the dependencies and run the project.
+Import the project in Android Studio, install the dependencies and run the project.
 
 
