@@ -485,8 +485,6 @@ public class VehicleRecognition extends Activity implements CameraBridgeViewBase
             finish();
             return null;
         }
-
-
     }
     
     public void onCameraViewStarted(int width, int height) {
