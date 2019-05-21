@@ -1,10 +1,17 @@
+/**
+ * Vehicle Recognition Project
+ * Associated with the paper "Transfer Learning Approach for Classification and Noise Reduction on Noisy Web data"
+ * Created by Sina M.Baharlou (Sina.Baharlou@gmail.com) on 9/17/17.
+ * Project page: https://www.sinabaharlou.com/VehicleRecognition
+ */
+
+// -- Package declaration -- 
 package com.deepsoft.vehiclerecognition;
 
-
+// -- Import required libraries --
 import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,19 +24,13 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
-/**
- * Vehicle Recognition Project
- * Associated with the paper "Transfer Learning Approach for Classification and Noise Reduction on Noisy Web data"
- * Created by Sina M.Baharlou (Sina.Baharlou@gmail.com) on 9/17/17.
- * Project page: https://www.sinabaharlou.com/VehicleRecognition
- */
 
+// -- a Comparator class for the output results --
 class ResultsComparator implements  Comparator<Pair<String,Float>>
 {
     @Override
@@ -38,14 +39,14 @@ class ResultsComparator implements  Comparator<Pair<String,Float>>
     }
 }
 
+// -- Convolutional Neural Network wrapper Class --
 class CNNClassifier
 {
-
-    // class Variables
+    // -- Class Variables --
     private TensorFlowInferenceInterface mTensorFlow;
     final private Context mAppContext;
 
-    // network parameters
+    // -- Network parameters --
     private String mNetworkName;
     private String mInputLayer;
     private String mOutputLayer;
@@ -56,19 +57,17 @@ class CNNClassifier
     private String mLabelsPath;
     private double mThreshold;
 
-    // other parameters
+    // -- Other parameters --
     private Scalar mMeanScalar;
     private long mOutputSize;
     private int mLabelsCount;
     private Vector<String> mLabelsVector;
-
     private Mat mFloatMat;
     private Size mDstSize;
     private float[] mFloatArray;
     private Mat mCroppedMat;
 
-
-    // final variables
+    // -- Final variables (Constants) -- 
     private final String JSON_TAG_NAME ="Name";
     private final String JSON_TAG_INPUT_LAYER ="InputLayer";
     private final String JSON_TAG_OUTPUT_LAYER ="OutputLayer";
@@ -80,16 +79,17 @@ class CNNClassifier
     private final String JSON_TAG_THRESHOLD = "Threshold";
     private final boolean ENABLE_DEBUG = true;
 
+    // -- Constructor --
     public CNNClassifier(Context context, String config) throws JSONException, IOException
     {
+        // -- Keep the main context -- 
         mAppContext = context;
 
-        // load and parse json parameters
+        // -- Load and parse json parameters --
         String jsonString = Utils.loadJson(mAppContext, config);
         JSONObject jsonConfigs = new JSONObject(jsonString);
 
-
-        // assign network parameters
+        // -- Assign network parameters --
         mNetworkName = jsonConfigs.getString(JSON_TAG_NAME);
         mInputLayer = jsonConfigs.getString(JSON_TAG_INPUT_LAYER);
         mOutputLayer = jsonConfigs.getString(JSON_TAG_OUTPUT_LAYER);
@@ -98,37 +98,37 @@ class CNNClassifier
         mNetworkPath = jsonConfigs.getString(JSON_TAG_NETWORK_PATH);
         mLabelsPath = jsonConfigs.getString(JSON_TAG_LABELS_PATH);
         mThreshold = jsonConfigs.getDouble(JSON_TAG_THRESHOLD);
-
-
-        // get network mean json array
+        
+        // -- Get dataset's mean json array -- 
         JSONArray jsonArray = jsonConfigs.getJSONArray(JSON_TAG_MEAN);
 
-        // read json array values
+        // -- Read json array values --
         mMeanArray = new double[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++)
             mMeanArray[i] = jsonArray.getDouble(i);
 
-        // create mean scalar
+        // -- Create scalar mean --
         mMeanScalar = new Scalar(mMeanArray);
 
-        // initialize tensorflow class
+        // -- Initialize tensorflow class --
         mTensorFlow = new TensorFlowInferenceInterface(mAppContext.getAssets(),
                 String.format("file:///android_asset/%s", mNetworkPath));
 
-        // determine network's output size
+        // -- Determine network's output size --
         mOutputSize = mTensorFlow.graphOperation(mOutputLayer).output(0).shape().size(1);
 
-        // load classifier labels
+        // -- Load classifier labels --
         mLabelsVector = Utils.loadLabels(mAppContext, mLabelsPath);
         mLabelsCount = mLabelsVector.size();
 
-        // create CV.Size variable
+        // -- Create CV.Size variable --
         mDstSize = new Size(mInputSize, mInputSize);
 
-        // initialize buffers
+        // -- Initialize buffers --
         mFloatArray = new float[mInputSize * mInputSize * mInputDim];
         mFloatMat = new Mat(mDstSize, CvType.CV_32FC3);
 
+        // -- Print information (if debug flag is enabled) --
         if (ENABLE_DEBUG)
         {
             Log.d("CNN-Classifier", "Network name: " + mNetworkName);
@@ -142,45 +142,40 @@ class CNNClassifier
             Log.d("CNN-Classifier", "Labels : " + mLabelsVector.toString());
         }
 
-
     }
 
+    // -- Get Region of Interest -- 
     static Rect getROI(Mat inputMat)
     {
-        // get input size
+        // -- Get input size --
         Size matSize = inputMat.size();
 
-        // find the smaller dimension
+        // -- Find the smaller dimension --
         double minDim = Math.min(matSize.width, matSize.height);
-        // determine the new frame size
-        minDim = Math.floor(minDim / 2.0);
-        // get input center
-        Point frameCenter = new Point(inputMat.width() / 2.0, inputMat.height() / 2.0);
-        // create new frame crop rectangle
-
+        minDim = Math.floor(minDim / 2.0); // determine the new frame size    
+        Point frameCenter = new Point(inputMat.width() / 2.0, inputMat.height() / 2.0); // get input center
+        
+        // -- Create new frame crop rectangle --
         return new Rect((int) (frameCenter.x - minDim),
                 (int) (frameCenter.y - minDim),
                 (int) (minDim * 2), (int) (minDim * 2));
     }
 
+    // -- Preprocess the input image --
     private Mat preProcess(Mat inputMat)
     {
-        // get crop rect
+        // -- Get cropping rect --
         Rect cropRect=getROI(inputMat);
+       
+        // -- Preprocess -- 
+        Mat subMat = inputMat.submat(cropRect);                     // crop input matrix
+        Imgproc.cvtColor(subMat, subMat, Imgproc.COLOR_RGBA2RGB);   // discard alpha channel
+        Imgproc.resize(subMat, subMat, mDstSize);                   // resize the input
+        subMat.convertTo(mFloatMat, CvType.CV_32FC3);               // convert to float mat
+        Core.subtract(mFloatMat, mMeanScalar, mFloatMat);           // subtract the mean
+        mFloatMat.get(0, 0, mFloatArray);                           // get float array
 
-        // crop input matrix
-        Mat subMat = inputMat.submat(cropRect);
-        // discard alpha channel
-        Imgproc.cvtColor(subMat, subMat, Imgproc.COLOR_RGBA2RGB);
-        // resize the input
-        Imgproc.resize(subMat, subMat, mDstSize);
-        // convert to float mat
-        subMat.convertTo(mFloatMat, CvType.CV_32FC3);
-        // subtract the mean
-        Core.subtract(mFloatMat, mMeanScalar, mFloatMat);
-        // get float array
-        mFloatMat.get(0, 0, mFloatArray);
-
+        // -- Print information (if debug flag is enabled) --
         if (ENABLE_DEBUG)
         {
             Log.d("CNN-Classifier", "Input size :" + inputMat.size().toString());
@@ -189,7 +184,7 @@ class CNNClassifier
         return subMat;
     }
 
-
+    // -- Get the results -- 
     private Vector<Pair<String,Float>> getResults(float [] accuracy)
     {
         Vector<Pair<String,Float>> resultVector=new Vector<>();
@@ -199,36 +194,37 @@ class CNNClassifier
         return resultVector;
 
     }
-
-
+        
+    // -- The recognition takes place here -- 
     Vector<Pair<String,Float>> performRecognition(Mat cameraMat)
     {
+        // -- Convert the color, crop, resize, and subtract the mean --
+        mCroppedMat = preProcess(cameraMat);
 
-        // convert color,crop, resize, and subtract the mean
-        mCroppedMat =preProcess(cameraMat);
-
-        // Assign network's input data
+        // -- Assign network's input data --
         mTensorFlow.feed(mInputLayer, mFloatArray,
                 1, mInputSize,
                 mInputSize,
                 mInputDim);
 
-        // Feeding forward the network
+        // -- Feeding forward the network --
         mTensorFlow.run(new String[]{mOutputLayer});
 
+        // -- Define ouput arrays -- 
         float[] rawOutput = new float[(int) mOutputSize];
         float[] acctualOutput = new float[mLabelsCount];
 
-        // fetch output values
+        // -- Fetch output values --
         mTensorFlow.fetch(mOutputLayer, rawOutput);
 
-        // get acctual output
+        // -- Get actual output --
         System.arraycopy(rawOutput, 0, acctualOutput, 0, mLabelsCount);
 
-        // determine the accuracy
+        // -- Determine the accuracy --
         Vector<Pair<String,Float>> results = getResults(acctualOutput);
         Collections.sort(results,new ResultsComparator());
 
+        // -- Print information (if debug flag is enabled) --
         if (ENABLE_DEBUG)
         {
             for (Pair<String, Float> pair : results) {
@@ -237,15 +233,15 @@ class CNNClassifier
             }
         }
         return results;
-
-
     }
 
+    // -- Property method, get the threshold --
     double getThreshold()
     {
         return mThreshold;
     }
 
+    // -- Property method, get the cropped matrix --
     Mat getCroppedMat()
     {
         return mCroppedMat;
