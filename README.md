@@ -15,4 +15,5 @@ For more information please visit the following website: https://www.sinabaharlo
 
 Import the project in Android Studio, install the dependencies and run the project.
 
+![Screenshot of the program](https://raw.githubusercontent.com/Sina-Baharlou/sina-baharlou.github.io/master/static/media/projects/vehicle-recognition/demo-app-01.jpg)
 
