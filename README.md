@@ -31,10 +31,15 @@ One of the main ingredients to learn a visual representation of an object using 
 
 You can download the dataset [here](https://mega.nz/#F!1HxDCDxb!cgLisUq7nuf4t_7QhUHs-g)
 
+## Results
+<p align="center"><img src="docs/results.png" width="800" title="Results"></p>
+The flow of recognition accuracy while applying the noise reduction process, (left) Inception V3, (center) MobileNet, (right) CarNet.</br>
+For further results, please read our paper or visit our webpage: https://www.sinabaharlou.com/VehicleRecognition
+
 ## Codes
 This project provides an android application which demonstrates the methods discussed in the paper. It has the capability of recognizing the models of a group of specified vehicles. The application has been tested on the Lollipop version of Android. You can also find a demonstration notebook in the "notebook-demo" folder.
 
-For more information please visit the our webpage: https://www.sinabaharlou.com/VehicleRecognition
+For a live demonstration with Tensorflow.js please visit the our webpage: https://www.sinabaharlou.com/VehicleRecognition
 
 > **Requirements:**
 
