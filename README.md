@@ -21,6 +21,7 @@ One of the main ingredients to learn a visual representation of an object using 
 * Providing an android application in which the proposed approach is implemented.
 
 ## Dataset
+The dataset used in this project is gathered from a structured marketing website. This dataset contains an overall number of 106,688 images and 15 categories of vehicle models which is divided into the following subsets :
 
 * Noisy subset: includes 45,000 images randomly sub-sampled from the main dataset (5,000 images per class).
 
@@ -41,7 +42,7 @@ This project provides an android application which demonstrates the methods disc
 
 For a live demonstration with Tensorflow.js please visit the our webpage: https://www.sinabaharlou.com/VehicleRecognition
 
-> **Requirements:**
+### Requirements
 
 > - Android Studio </br>
 > - Gradle</br>
